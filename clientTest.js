@@ -15,5 +15,4 @@ class ClientsPageTest {
 
 }
 let clientPageTest = new ClientsPageTest();
-
 clientPageTest.test();
