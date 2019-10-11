@@ -67,46 +67,79 @@ class ClientsPage {
 
 
 
-
-
+    /**
+     * Click on the first client in the table
+     * @returns true if PopUp appears after the click.
+     */
     async clickFirstClient() {
         await this.selenium.clickElement(this.locators.firstClient.locator, this.locators.firstClient.type);
         return await this.selenium.isElementExists(this.locators.popupDetails.locator, this.locators.popupDetails.type);
     }
 
+    /**
+     * Click on the Update button on PopUp
+     * @returns true if Success Popup appears as a result of the click
+     */
     async clickDeletePopUpDetail() {
         await this.selenium.clickElement(this.locators.deleteClient.locator, this.locators.deleteClient.type);
         return this.isSuccess();
     }
 
+    /**
+     * Click on the Update button on PopUp
+     */
     async clickUpdatePopUpDetail() {
         await this.selenium.clickElement(this.locators.updateClient.locator, this.locators.updateClient.type);
     }
 
+    /**
+     * @returns true if Success popup appears , false otherwise
+     */
     async isSuccess(){
         return await this.selenium.isElementExists(this.locators.successPopUp.locator, this.locators.successPopUp.type);
     }
 
+    /**
+     * @returns true if error popup appears, false otherwise
+     */
     async isError(){
         return await this.selenium.isElementExists(this.locators.errorPopUp.locator, this.locators.errorPopUp.type);
     }
 
+    /**
+     * Writes the spceified value into a given field in the popup
+     * @param {string} inputType - The input to write to.Can be: name,country or email
+     * @param {string} value - Will be written to the specified field.
+     */
     async putValue(inputType, value) {
         inputType = inputType.toLowerCase();
         await this.selenium.clearElementField(inputType);
         await this.selenium.write(value,inputType);
     }
 
+    /**
+     * Clears the specified field in the popup
+     * @param {string} inputType - The input to write to.Can be: name,country or email 
+     */
     async clearValue(inputType) {
         inputType = inputType.toLowerCase();
         await this.selenium.clearElementField(inputType);
     }
 
+    /**
+     * Click the close button on the Opened Popup
+     * @returns true if the popup gone after click, false otherwise
+     */
     async closePopupDetails() {
         await this.selenium.clickElement(this.locators.closePopUpBtn.locator, this.locators.closePopUpBtn.type);
         return !(await this.selenium.isElementExists(this.locators.popupDetails.locator, this.locators.popupDetails.type));
     }
 
+    /**
+     * 
+     * @param {WebElement} clientElement - A WebElement that refers to a client
+     * @returns an object that represent the client specified by the clientElement
+     */
     async getParamsFromClient(clientElement) {
         const client = {
             firstName: await this.selenium.getTextFromElement("th:nth-child(1)", "css", undefined, clientElement),
@@ -122,6 +155,9 @@ class ClientsPage {
         return client;
     }
 
+    /**
+     * @returns An object that represents a the first client on the first page
+     */
     async getClientDetails() {
         const firstPageResults = await this.collectResults(true);
         const firstClientElem = firstPageResults[0];
@@ -148,12 +184,22 @@ class ClientsPage {
         return false;
     }
 
+    /**
+     * 
+     * @param {Array} clientsList 
+     * @param {Array} clientsElems  - Array of WebElements to map to clientsList
+     */
     mapClientsElementsToList(clientsList, clientsElems) {
         for (let clientsElem of clientsElems) {
             clientsList.push(clientsElem);
         }
     }
 
+    /**
+     * 
+     * @param {boolean} onlyFirstPage - if true only the first page will be returned, otherwise all pages
+     * @return list of results.
+     */
     async collectResults(onlyFirstPage = true) {
         const clientsList = [];
         try {
@@ -176,13 +222,14 @@ class ClientsPage {
      * 
      * @param {string} input 
      * @param {string} searchBy 
-     * @returns {*} list of results ?
+     * @returns list of results, or undefined  - if error occured
      */
     async searchByParams(input, searchBy = "Name", onlyFirstPageResults = true) {
         try {
             searchBy = this.capitlize(searchBy);
             await this.selenium.clickElement(this.locators.dropDown.locator, this.locators.dropDown.type);
             await this.selenium.clickElement(this.locators.dropDownOption.locator(searchBy), this.locators.dropDownOption.type);
+            await this.selenium.clickElement(this.locators.dropDown.locator, this.locators.dropDown.type);
             await this.selenium.write(input, this.locators.searchClients.locator, this.locators.searchClients.type);
             return await this.collectResults(onlyFirstPageResults);
         } catch (error) {

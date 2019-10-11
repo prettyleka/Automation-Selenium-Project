@@ -14,6 +14,7 @@ class SeleniumInfra {
             await this.driver.manage().window().maximize();
             await this.driver.get(URL);
             await this.driver.manage().setTimeouts({ pageLoad: 3000 });
+            await this.driver.sleep(1000);
         } catch (error) {
             return Promise.reject(new Error(`SeleniumInfra: Failed to GET the URL: ${URL}.`));
         }
@@ -21,6 +22,7 @@ class SeleniumInfra {
 
     async close() {
         try {
+            await this.driver.sleep(1000);
             await this.driver.quit();
         } catch (error) {
             return Promise.reject(new Error(`SeleniumInfra: Failed to ClOSE the Driver.`));
@@ -33,8 +35,9 @@ class SeleniumInfra {
         }
 
         try {
+            await this.driver.sleep(1000);
             await element.click();
-            await this.driver.sleep(2000);
+            await this.driver.sleep(1000);
         } catch (error) {
             return Promise.reject(new Error(`SeleniumInfra: Could not CLICK on the element with:(${locator}), locatorType (${locatorType}).`));
         }

@@ -9,12 +9,12 @@ class ClientsPageTest {
     }
 
     async clientTest() {
-        // await this.clientsPage.navigateToClientsPage();
-        // // Implement the test here...
-        // await this.search();
+        await this.clientsPage.navigateToClientsPage();
+        // Implement the test here...
+        await this.search();
 
-        // await this.clientsPage.navigateToClientsPage();
-        // await this.deleteClient();
+        await this.clientsPage.navigateToClientsPage();
+        await this.deleteClient();
 
         await this.clientsPage.navigateToClientsPage();
         await this.updateClient();
@@ -52,7 +52,7 @@ class ClientsPageTest {
             console.error(new Error(`ClientsPageTest deleteClient: Successful Message didn't appear`));
         }
 
-       const clientAfterSearch = await this.clientsPage.searchByParams(client.firstName + " " + client.lastName, "name",true)
+       const clientAfterSearch = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name",true)
         if(clientAfterSearch === undefined){
             console.error(new Error(`ClientsPageTest deleteClient: TEST ERROR`))
         }else if(clientAfterSearch.length === 0){
