@@ -35,9 +35,9 @@ class SeleniumInfra {
         }
 
         try {
-            await this.driver.sleep(1000);
+            await this.driver.sleep(200);
             await element.click();
-            await this.driver.sleep(1000);
+            await this.driver.sleep(200);
         } catch (error) {
             return Promise.reject(new Error(`SeleniumInfra: Could not CLICK on the element with:(${locator}), locatorType (${locatorType}).`));
         }

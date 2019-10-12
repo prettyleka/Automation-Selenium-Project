@@ -2,10 +2,6 @@ class ActionsPage {
     constructor(selenium) {
         this.selenium = selenium;
         this.locators = {
-            // inputField:{
-            //     locator: fieldName => `${fieldName}`,
-            //     type:"id"
-            // },
             firstName: {
                 locator: "input#firstName",
                 type: "css"
@@ -37,6 +33,18 @@ class ActionsPage {
             errorPopUp: {
                 locator: ".error-pop-up",
                 type: "css"
+            },
+            clientsInput:{
+                locator: 'input[list="names"]',
+                type: "css"
+            },
+            emailTypeInput:{
+                locator: 'input[list="emailType"]',
+                type: "css"
+            },
+            sendBtn:{
+                locator: 'input[value="Send"]',
+                type:"css"
             }
         }
     }
@@ -57,8 +65,14 @@ class ActionsPage {
         };
     }
 
-    async updateClient(clientObj){
-        //** */
+    async updateClient(clientObj) {
+        await this.selenium.write(`${clientObj.firstName} ${clientObj.lastName}`, this.locators.clientsInput.locator, this.locators.clientsInput.type);
+        await this.selenium.write(`B`, this.locators.emailTypeInput.locator, this.locators.emailTypeInput.type);
+        await this.selenium.clickElement(this.locators.sendBtn.locator, this.locators.sendBtn.type);
+        return {
+            isSuccessPopUp: await this.isSuccess(),
+            isErrorPopUp: await this.isError()
+        };
     }
 
     /**

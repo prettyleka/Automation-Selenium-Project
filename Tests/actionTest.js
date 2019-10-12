@@ -29,14 +29,32 @@ class ActionsPageTest{
             email:"test@mail.com"
         }
         await this.addClient(inValidClient, false);
+
+        await this.updateClient();
         await this.testSelenium.close();
     }
 
-    async updateClient(){
+    async updateClient(){ 
         await this.clientsPage.navigateToClientsPage();
+        const results = await this.clientsPage.searchByParams("A","email type");
+        if(!results || results.length<1){
+            console.error(new Error(`AnalyticsPageTest outstandingClients: No results`));
+            return;
+        }
         const client = await this.clientsPage.getClientDetails();
         await this.actionsPage.navigateToActionsPage();
-        await this.actionsPage.updateClient(client);
+        const popup = await this.actionsPage.updateClient(client);
+        if(!popup.isSuccessPopUp){
+            console.error(new Error(`ActionsPageTest updateClient: Successful Message didn't appear`));
+        }
+        await this.clientsPage.navigateToClientsPage();
+        const results2 = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`,"name");
+        const client2 = await this.clientsPage.getParamsFromClient(results2[0]);
+        if(client2.emailType === "B"){
+            console.log(`ActionsPageTest updateClient: TEST PASS`);
+        }else{
+            console.log(`ActionsPageTest updateClient: TEST FAIL`);
+        }
     }
 
     async addClient(client, isPositive = true) {

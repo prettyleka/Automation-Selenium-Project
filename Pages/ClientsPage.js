@@ -189,8 +189,11 @@ class ClientsPage {
      * @param {Array} clientsList 
      * @param {Array} clientsElems  - Array of WebElements to map to clientsList
      */
-    mapClientsElementsToList(clientsList, clientsElems) {
+    async mapClientsElementsToList(clientsList, clientsElems, onlyFirstPage = true) {
         for (let clientsElem of clientsElems) {
+            if (!onlyFirstPage) {
+                clientsElem = await this.getParamsFromClient(clientsElem)
+            }
             clientsList.push(clientsElem);
         }
     }
@@ -205,7 +208,7 @@ class ClientsPage {
         try {
             do {
                 const currentPageClientsElems = await this.selenium.findElementListBy(this.locators.tableResults.locator, this.locators.tableResults.type);
-                this.mapClientsElementsToList(clientsList, currentPageClientsElems);
+                await this.mapClientsElementsToList(clientsList, currentPageClientsElems, onlyFirstPage);
                 if (onlyFirstPage || !(await this.isThereNextPage())) {
                     break;
                 }
@@ -254,13 +257,12 @@ class ClientsPage {
 
     //other methods if necessary
 
-    async countEmailsSent(){
-        const clinetsElem = await this.clientsPage.searchByParams("","email type",false);
+    async countEmailsSent() {
+        const clinetsObjs = await this.collectResults(false);
         let count = 0;
 
-        for(let clinetElem of clinetsElem){
-            const clientObj = await this.getParamsFromClient(clinetElem);
-            if(clientObj.emailType !== "-"){
+        for (let clinetsObj of clinetsObjs) {
+            if (clinetsObj.emailType !== "-") {
                 count++;
             }
         }
