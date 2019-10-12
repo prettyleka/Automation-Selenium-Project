@@ -194,7 +194,8 @@ class ClientsPage {
      * 
      * @param {Array} clientsList  - The mapped elements go here 
      * @param {Array} clientsElems - Array of WebElements to map to clientsList
-     * @param {boolean} onlyFirstPage - 
+     * @param {boolean} onlyFirstPage - if true clientsList will hold webElements of clients from first page,
+     * otherwise will hold objects that each represent a client from all pages
      */
     async mapClientsElementsToList(clientsList, clientsElems, onlyFirstPage = true) {
         for (let clientsElem of clientsElems) {
