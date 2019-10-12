@@ -1,68 +1,68 @@
 class ClientsPage {
     constructor(selenium) {
-        this.selenium = selenium,
-            this.locators = {
-                searchClients: {
-                    locator: "div.search-clients>input",
-                    type: "css"
-                },
-                dropDown: {
-                    locator: "div.search-clients>.select-css",
-                    type: "css"
-                },
-                dropDownOption: {
-                    locator: optionValue => `.select-css>option[value='${optionValue}']`,
-                    type: "css"
-                },
-                tableResults: {
-                    locator: "table>tr.clientDetails",
-                    type: "css"
-                },
-                currentPageNumber: {
-                    locator: "div.page-numbers span.page:nth-of-type(1)",
-                    type: "css"
-                },
-                totalPagesNumber: {
-                    locator: "div.page-numbers span.page:nth-of-type(3)",
-                    type: "css"
-                },
-                previousPage: {
-                    locator: "div.page-numbers img[name='previous']",
-                    type: "css"
-                },
-                nextPage: {
-                    locator: "div.page-numbers img[name='next']",
-                    type: "css"
-                },
-                firstClient: {
-                    locator: "table>tr.clientDetails:nth-of-type(2)",
-                    type: "css"
-                },
-                popupDetails: {
-                    locator: "div.details-pop-up-container",
-                    type: "css"
-                },
-                deleteClient: {
-                    locator: "input.delete-client-popup-btn",
-                    type: "css"
-                },
-                successPopUp: {
-                    locator: ".success-pop-up",
-                    type: "css"
-                },
-                errorPopUp: {
-                    locator: ".error-pop-up",
-                    type: "css"
-                },
-                closePopUpBtn: {
-                    locator: "input.cancel-client-popup-btn",
-                    type: "css"
-                },
-                updateClient: {
-                    locator: "input.update-client-popup-btn",
-                    type: "css"
-                },
-            }
+        this.selenium = selenium;
+        this.locators = {
+            searchClients: {
+                locator: "div.search-clients>input",
+                type: "css"
+            },
+            dropDown: {
+                locator: "div.search-clients>.select-css",
+                type: "css"
+            },
+            dropDownOption: {
+                locator: optionValue => `.select-css>option[value='${optionValue}']`,
+                type: "css"
+            },
+            tableResults: {
+                locator: "table>tr.clientDetails",
+                type: "css"
+            },
+            currentPageNumber: {
+                locator: "div.page-numbers span.page:nth-of-type(1)",
+                type: "css"
+            },
+            totalPagesNumber: {
+                locator: "div.page-numbers span.page:nth-of-type(3)",
+                type: "css"
+            },
+            previousPage: {
+                locator: "div.page-numbers img[name='previous']",
+                type: "css"
+            },
+            nextPage: {
+                locator: "div.page-numbers img[name='next']",
+                type: "css"
+            },
+            firstClient: {
+                locator: "table>tr.clientDetails:nth-of-type(2)",
+                type: "css"
+            },
+            popupDetails: {
+                locator: "div.details-pop-up-container",
+                type: "css"
+            },
+            deleteClient: {
+                locator: "input.delete-client-popup-btn",
+                type: "css"
+            },
+            successPopUp: {
+                locator: ".success-pop-up",
+                type: "css"
+            },
+            errorPopUp: {
+                locator: ".error-pop-up",
+                type: "css"
+            },
+            closePopUpBtn: {
+                locator: "input.cancel-client-popup-btn",
+                type: "css"
+            },
+            updateClient: {
+                locator: "input.update-client-popup-btn",
+                type: "css"
+            },
+        }
     }
 
 
@@ -95,14 +95,14 @@ class ClientsPage {
     /**
      * @returns true if Success popup appears , false otherwise
      */
-    async isSuccess(){
+    async isSuccess() {
         return await this.selenium.isElementExists(this.locators.successPopUp.locator, this.locators.successPopUp.type);
     }
 
     /**
      * @returns true if error popup appears, false otherwise
      */
-    async isError(){
+    async isError() {
         return await this.selenium.isElementExists(this.locators.errorPopUp.locator, this.locators.errorPopUp.type);
     }
 
@@ -114,7 +114,7 @@ class ClientsPage {
     async putValue(inputType, value) {
         inputType = inputType.toLowerCase();
         await this.selenium.clearElementField(inputType);
-        await this.selenium.write(value,inputType);
+        await this.selenium.write(value, inputType);
     }
 
     /**
@@ -254,12 +254,27 @@ class ClientsPage {
 
     //other methods if necessary
 
+    async countEmailsSent(){
+        const clinetsElem = await this.clientsPage.searchByParams("","email type",false);
+        let count = 0;
+
+        for(let clinetElem of clinetsElem){
+            const clientObj = await this.getParamsFromClient(clinetElem);
+            if(clientObj.emailType !== "-"){
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     /**
      * Helpers
      */
     capitlize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        const strWords = str.split(" ");
+        const capWords = strWords.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        return capWords.join(" ");
     }
 }
 
