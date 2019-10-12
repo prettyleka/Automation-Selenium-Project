@@ -53,6 +53,11 @@ class ActionsPage {
         await this.selenium.getURL("https://lh-crm.herokuapp.com/actions");
     }
 
+    /**
+     * Add the given client to the CRM
+     * @param {*} clientObj - object that represents client to be added,should contain properties:firstName,lastName,country,owner,email.
+     * @returns an object with two booleans that indicates which popups appeared after clicking on add.
+     */
     async addClient(clientObj) {
         for (let prop in clientObj) {
             await this.selenium.write(clientObj[prop], this.locators[prop].locator, this.locators[prop].type);
@@ -65,6 +70,11 @@ class ActionsPage {
         };
     }
 
+    /**
+     * AUpdate the given client's  email type to 'B'
+     * @param {*} clientObj - object that represents client to be added,should contain properties:firstName,lastName,country,owner,email.
+     * @returns an object with two booleans that indicates which popups appeared after clicking on add.
+     */
     async updateClient(clientObj) {
         await this.selenium.write(`${clientObj.firstName} ${clientObj.lastName}`, this.locators.clientsInput.locator, this.locators.clientsInput.type);
         await this.selenium.write(`B`, this.locators.emailTypeInput.locator, this.locators.emailTypeInput.type);

@@ -184,10 +184,17 @@ class ClientsPage {
         return false;
     }
 
-    /**
+        /**
      * 
      * @param {Array} clientsList 
      * @param {Array} clientsElems  - Array of WebElements to map to clientsList
+     */
+
+    /**
+     * 
+     * @param {Array} clientsList  - The mapped elements go here 
+     * @param {Array} clientsElems - Array of WebElements to map to clientsList
+     * @param {boolean} onlyFirstPage - 
      */
     async mapClientsElementsToList(clientsList, clientsElems, onlyFirstPage = true) {
         for (let clientsElem of clientsElems) {
@@ -247,7 +254,6 @@ class ClientsPage {
     Return value: true if client exist, false otherwise
     */
     async searchAndValidateClient(input, searchBy = "Name") {
-        //implement the searchAndValidateClient function
         const searchResult = await this.searchByParams(input, searchBy);
         if (searchResult && searchResult.length > 0) {
             return true;
@@ -255,8 +261,9 @@ class ClientsPage {
         return false;
     }
 
-    //other methods if necessary
-
+    /**
+     * Scan the results show in table, and counts the number of clients with an email type
+     */
     async countEmailsSent() {
         const clinetsObjs = await this.collectResults(false);
         let count = 0;
