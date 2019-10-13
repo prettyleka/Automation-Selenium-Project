@@ -34,17 +34,17 @@ class ActionsPage {
                 locator: ".error-pop-up",
                 type: "css"
             },
-            clientsInput:{
+            clientsInput: {
                 locator: 'input[list="names"]',
                 type: "css"
             },
-            emailTypeInput:{
+            emailTypeInput: {
                 locator: 'input[list="emailType"]',
                 type: "css"
             },
-            sendBtn:{
+            sendBtn: {
                 locator: 'input[value="Send"]',
-                type:"css"
+                type: "css"
             }
         }
     }
@@ -73,11 +73,12 @@ class ActionsPage {
     /**
      * AUpdate the given client's  email type to 'B'
      * @param {*} clientObj - object that represents client to be added,should contain properties:firstName,lastName,country,owner,email.
+     * @param {string} newEmailType - The email type to be set
      * @returns an object with two booleans that indicates which popups appeared after clicking on add.
      */
-    async updateClient(clientObj) {
+    async updateClient(clientObj, newEmailType) {
         await this.selenium.write(`${clientObj.firstName} ${clientObj.lastName}`, this.locators.clientsInput.locator, this.locators.clientsInput.type);
-        await this.selenium.write(`B`, this.locators.emailTypeInput.locator, this.locators.emailTypeInput.type);
+        await this.selenium.write(newEmailType, this.locators.emailTypeInput.locator, this.locators.emailTypeInput.type);
         await this.selenium.clickElement(this.locators.sendBtn.locator, this.locators.sendBtn.type);
         return {
             isSuccessPopUp: await this.isSuccess(),
