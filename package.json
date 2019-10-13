@@ -4,13 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run hometest && npm run clienttest && npm run actionTest && npm run analyticsTest",
+    "hometest": "node Tests/homeTest.js",
+    "clienttest": "node Tests/clientTest.js",
+    "actionTest": "node Tests/actionTest.js",
+    "analyticsTest": "node Tests/analyticsTest.js"
   },
   "author": "ILYA L.",
   "license": "ISC",
   "dependencies": {
     "chromedriver": "^77.0.0",
-    "faker": "^4.1.0",
     "selenium-webdriver": "^4.0.0-alpha.5"
   }
 }
