@@ -1,3 +1,5 @@
+const logger = require("../logger/logger");
+
 const BasePage = require("../BasePage/BasePage");
 const HomePage = require("../Pages/HomePage");
 
@@ -16,15 +18,16 @@ class HomePageTest {
     }
 
     async navBarTest(targetNavTab){
+        logger.log("info","HomeTest - navBarTest(%s)",targetNavTab);
+
         await this.homePage.navigateToHomePage();
-        console.log(`HomePageTest navBarTest: targetNavTab = (${targetNavTab})`);
         const result = await this.homePage.navBarTo(targetNavTab);
         if(result){
-            console.log(`homeTest navBarTest: TEST PASS`);
+            logger.log("info","HomeTest - navBarTest: STATUS: %s","PASS");
         }else{
-            const currentUrl = await this.selenium.getCurrentURL();
-            console.log(`homeTest navBarTest: TEST FAIL`);
-            console.log(`Tried to navigate to (${targetNavTab}), but got this url: (${currentUrl})`);
+            const currentUrl = await this.testSelenium.getCurrentURL();
+            logger.log("warn","HomeTest - navBarTest: STATUS: %s","FAIL");
+            logger.log('info',`Tried to navigate to (${targetNavTab}), but got this url: (${currentUrl})`)
         }
 
     }
