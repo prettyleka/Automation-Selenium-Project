@@ -1,3 +1,4 @@
+const logger = require("../logger/logger");
 const BasePage = require("../BasePage/BasePage");
 const ActionsPage = require("../Pages/ActionsPage");
 const ClientsPage = require("../Pages/ClientsPage");
@@ -36,28 +37,30 @@ class ActionsPageTest {
     async updateClient() {
         const oldEmailType = "B";
         const newEmailType = "C"
-        console.log(`ActionsPageTest updateClient: From EmailType:(${oldEmailType}) to (${newEmailType})`);
+        logger.log("debug", `ActionsPageTest updateClient: From EmailType:(${oldEmailType}) to (${newEmailType})`);
+
         await this.clientsPage.navigateToClientsPage();
         const results = await this.clientsPage.searchByParams(oldEmailType, "email type");
         if (!results || results.length < 1) {
-            console.error(new Error(`AnalyticsPageTest outstandingClients: No results`));
+            logger.log("error", "ActionsPageTest - updateClient: STATUS: %s. %s", "ERROR", "No results");
             return;
         }
         const client = await this.clientsPage.getClientDetails();
-        console.log(`The Client's ,${client.firstName} ${client.lastName} ,emailType before update: ${client.emailType}`);
+        logger.log("debug", `The Client's ,${client.firstName} ${client.lastName} ,emailType before update: ${client.emailType}`);
+
         await this.actionsPage.navigateToActionsPage();
         const popup = await this.actionsPage.updateClient(client, newEmailType);
         if (!popup.isSuccessPopUp) {
-            console.error(new Error(`ActionsPageTest updateClient: Successful Message didn't appear`));
+            logger.log("error", "ActionsPageTest - addClient: STATUS: %s.", "ERROR", "Successful Message didn't appear");
         }
         await this.clientsPage.navigateToClientsPage();
         const results2 = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name");
         const client2 = await this.clientsPage.getParamsFromClient(results2[0]);
-        console.log(`The Client's ,${client2.firstName} ${client2.lastName} ,emailType AFTER update: ${client2.emailType}`);
+        logger.log("debug", `The Client's ,${client2.firstName} ${client2.lastName} ,emailType AFTER update: ${client2.emailType}`);
         if (client2.emailType === newEmailType) {
-            console.log(`ActionsPageTest updateClient: TEST PASS`);
+            logger.log("info", "ActionsPageTest - updateClient: STATUS: %s", "PASS");
         } else {
-            console.log(`ActionsPageTest updateClient: TEST FAIL`);
+            logger.log("warn", "ActionsPageTest - addClient: STATUS: %s.", "FAIL");
         }
     }
 
@@ -68,31 +71,32 @@ class ActionsPageTest {
 
         if (isPositive) {
             if (!popUps.isSuccessPopUp) {
-                console.error(new Error(`ActionsPageTest addClient: Successful Message didn't appear`));
+                logger.log("error", "ActionsPageTest - addClient: STATUS: %s. %s", "ERROR", "Successful Message didn't appear");
             }
         } else {
             if (!popUps.isErrorPopUp) {
-                console.error(new Error(`ActionsPageTest addClient: Error Message didn't appear`));
+                logger.log("error", "ActionsPageTest - addClient: STATUS: %s. %s", "ERROR", "Error Message didn't appear");
             }
         }
         await this.clientsPage.navigateToClientsPage();
         const clientAfterSearch = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name", true);
         if (clientAfterSearch === undefined) {
-            console.error(new Error(`ActionsPageTest addClient: TEST ERROR`))
+            logger.log("error", "ActionsPageTest - addClient: STATUS: %s.", "ERROR");
             return;
         }
 
         if (isPositive) {
             if (clientAfterSearch.length === 0) {
-                console.log(`ActionsPageTest addClient: TEST FAIL - Client not found after adding`)
+                logger.log("warn", "ActionsPageTest - addClient: STATUS: %s. %s", "FAIL", "Client not found after adding");
+
             } else {
-                console.log(`ActionsPageTest addClient: TEST PASS`)
+                logger.log("info", "ActionsPageTest - addClient: STATUS: %s", "PASS");
             }
         } else {
             if (clientAfterSearch.length === 0) {
-                console.log(`ActionsPageTest addClient: TEST PASS`)
+                logger.log("info", "ActionsPageTest - addClient: STATUS: %s", "PASS");
             } else {
-                console.log(`ActionsPageTest addClient: TEST FAIL - Invalid client was added`)
+                logger.log("warn", "ActionsPageTest - addClient: STATUS: %s. %s", "FAIL", "Invalid client was added");
             }
         }
     }

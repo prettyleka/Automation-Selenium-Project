@@ -16,17 +16,17 @@ class HomePageTest {
         await this.testSelenium.close();
     }
 
-    async navBarTest(targetNavTab){
-        logger.log("debug","HomeTest - navBarTest(%s)",targetNavTab);
+    async navBarTest(targetNavTab) {
+        logger.log("debug", "HomeTest - navBarTest(%s)", targetNavTab);
 
         await this.homePage.navigateToHomePage();
         const result = await this.homePage.navBarTo(targetNavTab);
-        if(result){
-            logger.log("info","HomeTest - navBarTest: STATUS: %s","PASS");
-        }else{
+        if (result) {
+            logger.log("info", "HomeTest - navBarTest: STATUS: %s", "PASS");
+        } else {
             const currentUrl = await this.testSelenium.getCurrentURL();
-            logger.log("warn","HomeTest - navBarTest: STATUS: %s","FAIL");
-            logger.log('info',`Tried to navigate to (${targetNavTab}), but got this url: (${currentUrl})`)
+            logger.log("warn", "HomeTest - navBarTest: STATUS: %s", "FAIL");
+            logger.log('info', `Tried to navigate to (${targetNavTab}), but got this url: (${currentUrl})`)
         }
 
     }
