@@ -51,7 +51,7 @@ class ActionsPageTest {
         await this.actionsPage.navigateToActionsPage();
         const popup = await this.actionsPage.updateClient(client, newEmailType);
         if (!popup.isSuccessPopUp) {
-            logger.log("error", "ActionsPageTest - addClient: STATUS: %s.", "ERROR", "Successful Message didn't appear");
+            logger.log("error", "ActionsPageTest - updateClient: STATUS: %s.", "ERROR", "Successful Message didn't appear");
         }
         await this.clientsPage.navigateToClientsPage();
         const results2 = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name");
@@ -60,7 +60,7 @@ class ActionsPageTest {
         if (client2.emailType === newEmailType) {
             logger.log("info", "ActionsPageTest - updateClient: STATUS: %s", "PASS");
         } else {
-            logger.log("warn", "ActionsPageTest - addClient: STATUS: %s.", "FAIL");
+            logger.log("warn", "ActionsPageTest - updateClient: STATUS: %s.", "FAIL");
         }
     }
 
