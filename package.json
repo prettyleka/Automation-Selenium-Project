@@ -4,11 +4,11 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "npm run hometest && npm run clienttest && npm run actionTest && npm run analyticsTest",
+    "test": "npm run hometest && npm run clienttest && npm run actiontest && npm run analyticstest",
     "hometest": "node Tests/homeTest.js",
     "clienttest": "node Tests/clientTest.js",
-    "actionTest": "node Tests/actionTest.js",
-    "analyticsTest": "node Tests/analyticsTest.js"
+    "actiontest": "node Tests/actionTest.js",
+    "analyticstest": "node Tests/analyticsTest.js"
   },
   "author": "ILYA L.",
   "license": "ISC",

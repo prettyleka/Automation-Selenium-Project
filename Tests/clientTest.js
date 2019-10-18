@@ -22,7 +22,7 @@ class ClientsPageTest {
     }
 
     async updateClient() {
-        logger.log("info", "ClientTest - updateClient()");
+        logger.log("debug", "ClientTest - updateClient()");
         const isPopupAppear = await this.clientsPage.clickFirstClient();
         if (!isPopupAppear) {
             logger.log("error", "ClientTest - updateClient: %s", `Popup didnt appear`);
@@ -36,11 +36,10 @@ class ClientsPageTest {
         } else {
             logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected an error popup");
         }
-
     }
 
     async deleteClient() {
-        logger.log("info", "ClientTest - deleteClient()");
+        logger.log("debug", "ClientTest - deleteClient()");
         const client = await this.clientsPage.getClientDetails();
 
         const isPopupAppear = await this.clientsPage.clickFirstClient();
@@ -64,7 +63,7 @@ class ClientsPageTest {
     }
 
     async search() {
-        logger.log("info", "ClientTest - search()");
+        logger.log("debug", "ClientTest - search()");
         const result = await this.clientsPage.searchAndValidateClient("france", "country")
         if (result) {
             logger.log("info", "ClientsPageTest - search: STATUS: %s", "PASS");

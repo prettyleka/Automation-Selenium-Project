@@ -1,5 +1,4 @@
 const logger = require("../logger/logger");
-
 const BasePage = require("../BasePage/BasePage");
 const HomePage = require("../Pages/HomePage");
 
@@ -18,7 +17,7 @@ class HomePageTest {
     }
 
     async navBarTest(targetNavTab){
-        logger.log("info","HomeTest - navBarTest(%s)",targetNavTab);
+        logger.log("debug","HomeTest - navBarTest(%s)",targetNavTab);
 
         await this.homePage.navigateToHomePage();
         const result = await this.homePage.navBarTo(targetNavTab);

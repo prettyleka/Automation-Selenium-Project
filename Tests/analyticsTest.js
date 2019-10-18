@@ -1,3 +1,4 @@
+const logger = require("../logger/logger");
 const BasePage = require("../BasePage/BasePage");
 const AnaliyticsPage = require("../Pages/AnalyticsPage");
 const ClientsPage = require("../Pages/ClientsPage");
@@ -7,7 +8,6 @@ class AnalyticsPageTest{
         this.testSelenium = new BasePage().selenium;
         this.analyticsPage = new AnaliyticsPage(this.testSelenium);
         this.clientsPage = new ClientsPage(this.testSelenium);
-        // if your test uses more pages, you will have to inisiate them here, in the constractor
     }
 
     async analyticsTest() {
