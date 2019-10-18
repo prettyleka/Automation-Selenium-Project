@@ -65,7 +65,7 @@ class ActionsPageTest {
     }
 
     async addClient(client, isPositive = true) {
-        console.log(`ActionsPageTest addClient with: client = (${JSON.stringify(client)})`);
+        logger.log("debug", `ActionsPageTest addClient with: client = (${JSON.stringify(client)})`);
         await this.actionsPage.navigateToActionsPage();
         const popUps = await this.actionsPage.addClient(client);
 
