@@ -69,7 +69,7 @@ class ClientsPage {
 
     /**
      * Click on the first client in the table
-     * @returns true if PopUp appears after the click.
+     * @returns true if PopUp details appears after the click.
      */
     async clickFirstClient() {
         await this.selenium.clickElement(this.locators.firstClient.locator, this.locators.firstClient.type);
@@ -169,11 +169,11 @@ class ClientsPage {
         await this.selenium.getURL("https://lh-crm.herokuapp.com/client")
     }
 
-    async goNextPage() {
+    async _goNextPage() {
         await this.selenium.clickElement(this.locators.nextPage.locator, this.locators.nextPage.type);
     }
 
-    async isThereNextPage() {
+    async _isThereNextPage() {
         const currentPageNumber = await this.selenium.getTextFromElement(this.locators.currentPageNumber.locator, this.locators.currentPageNumber.type);
         const totalPagesNumber = await this.selenium.getTextFromElement(this.locators.totalPagesNumber.locator, this.locators.totalPagesNumber.type);
 
@@ -217,10 +217,10 @@ class ClientsPage {
             do {
                 const currentPageClientsElems = await this.selenium.findElementListBy(this.locators.tableResults.locator, this.locators.tableResults.type);
                 await this.mapClientsElementsToList(clientsList, currentPageClientsElems, onlyFirstPage);
-                if (onlyFirstPage || !(await this.isThereNextPage())) {
+                if (onlyFirstPage || !(await this._isThereNextPage())) {
                     break;
                 }
-                await this.goNextPage();
+                await this._goNextPage();
             } while (true);
         } catch (error) {
             console.error(new Error(`ClientsPage collectResults()`));
@@ -275,6 +275,33 @@ class ClientsPage {
             }
         }
         return count;
+    }
+
+
+    /**
+     * Updates the first client with the specified value
+     * @param {string} inputType - The input to write to.Can be: name,country or email
+     * @param {string} value - Will be written to the specified field.
+     * @param {boolean} isPositive - if true will expect success popup,or error popup otherwise.
+     * @returns {boolean} - true if pass, false otherwise
+     */
+    async updateFirstClient(inputType, value, isPositive = false) {
+        const isPopupAppear = await this.clickFirstClient();
+        if (!isPopupAppear) {
+            logger.log("error", "ClientPage - updateClient: %s", `Popup didnt appear`);
+            return false;
+        }
+
+        await this.putValue(inputType, value);
+        await this.clickUpdatePopUpDetail();
+
+        if (isPositive) {
+            const isSuccess = await this.isSuccess();
+            return isSuccess;
+        } else {
+            const isError = await this.isError();
+            return isError;
+        }
     }
 
 

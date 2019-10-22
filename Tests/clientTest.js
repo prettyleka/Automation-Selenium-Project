@@ -9,33 +9,33 @@ class ClientsPageTest {
     }
 
     async clientTest() {
-        await this.clientsPage.navigateToClientsPage();
-        await this.search();
+        // await this.clientsPage.navigateToClientsPage();
+        // await this.search();
+
+        // await this.clientsPage.navigateToClientsPage();
+        // await this.deleteClient();
 
         await this.clientsPage.navigateToClientsPage();
-        await this.deleteClient();
-
-        await this.clientsPage.navigateToClientsPage();
-        await this.updateClient();
+        await this.updateClient("email", "112233 - not valid mail", false);
 
         await this.testSelenium.close();
     }
 
-    async updateClient() {
+    async updateClient(inputType, value, isPositive = false) {
+        //test
         logger.log("debug", "ClientTest - updateClient()");
-        const isPopupAppear = await this.clientsPage.clickFirstClient();
-        if (!isPopupAppear) {
-            logger.log("error", "ClientTest - updateClient: %s", `Popup didnt appear`);
+        let isPass = await this.clientsPage.updateFirstClient(inputType, value, isPositive)
+        if (isPass) {
+            logger.log("info", "ClientsPageTest updateClient: STATUS: %s", "PASS");
             return;
         }
-        await this.clientsPage.putValue("email", "112233 - not valid mail");
-        await this.clientsPage.clickUpdatePopUpDetail()
-        const isError = await this.clientsPage.isError();
-        if (isError) {
-            logger.log("info", "ClientsPageTest updateClient: STATUS: %s", "PASS");
+        if (isPositive) {
+            logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected a Success popup");
         } else {
-            logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected an error popup");
+            logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected an Error popup");
         }
+
+        return;
     }
 
     async deleteClient() {
