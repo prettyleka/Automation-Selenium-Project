@@ -12,8 +12,8 @@ class AnalyticsPageTest {
 
     async analyticsTest() {
         await this.emailSent();
-        await this.emailSent2();
-        await this.outstandingClients();
+        // await this.emailSentAndDelete();
+        // await this.outstandingClients();
         await this.testSelenium.close();
     }
 
@@ -21,45 +21,47 @@ class AnalyticsPageTest {
         logger.log("debug", "AnalyticsPageTest - emailSent()");
         await this.analyticsPage.navigateToAnaliyticsPage();
         const emailsSentAnalyticsPage = await this.analyticsPage.getEmailsSent();
-        await this.clientsPage.navigateToClientsPage();
 
+        await this.clientsPage.navigateToClientsPage();
         const emailsSentClientsPage = await this.clientsPage.countEmailsSent();
+
         if (emailsSentAnalyticsPage === emailsSentClientsPage) {
             logger.log("info", "AnalyticsPageTest - emailSent: STATUS: %s", "PASS");
         } else {
-            logger.log("warn", "AnalyticsPageTest - emailSent: %s.", "FAIL");
-            logger.log('info', `On AnalyticsPage emails sent = ${emailsSentAnalyticsPage} , but on ClientsPage: ${emailsSentClientsPage}`)
+            logger.log("warn", `AnalyticsPageTest - emailSent: %s.\n On AnalyticsPage emails sent = ${emailsSentAnalyticsPage} , but on ClientsPage: ${emailsSentClientsPage}`, "FAIL");
         }
     }
 
-    async emailSent2() {
-        logger.log("debug", "AnalyticsPageTest - emailSent2()");
+    async emailSentAndDelete() {
+        logger.log("debug", "AnalyticsPageTest - emailSentAndDelete()");
         await this.analyticsPage.navigateToAnaliyticsPage();
         const emailsSentAnalyticsPage = await this.analyticsPage.getEmailsSent();
+
         await this.clientsPage.navigateToClientsPage();
         const results = await this.clientsPage.searchByParams("A", "email type");
         if (!results || results.length < 1) {
-            logger.log("error", "AnalyticsPageTest - emailSent2: STATUS: %s. %s", "ERROR", "No results");
+            logger.log("error", "AnalyticsPageTest - emailSentAndDelete: STATUS: %s. %s", "ERROR", "No results");
             return;
         }
         const isPopupAppear = await this.clientsPage.clickFirstClient();
         if (!isPopupAppear) {
-            logger.log("error", "AnalyticsPageTest - emailSent2: STATUS: %s. %s", "ERROR", "Popup didnt appear");
+            logger.log("error", "AnalyticsPageTest - emailSentAndDelete: STATUS: %s. %s", "ERROR", "Popup didnt appear");
             return;
         }
 
         const isGotSuccessfulMessage = await this.clientsPage.clickDeletePopUpDetail()
         if (!isGotSuccessfulMessage) {
-            logger.log("error", "AnalyticsPageTest - emailSent2: STATUS: %s. %s", "ERROR", "Successful Message didn't appear");
+            logger.log("error", "AnalyticsPageTest - emailSentAndDelete: STATUS: %s. %s", "ERROR", "Successful Message didn't appear");
             return;
         }
+
         await this.analyticsPage.navigateToAnaliyticsPage();
         const afterDeleteEmailsSentAnalyticsPage = await this.analyticsPage.getEmailsSent();
 
         if (emailsSentAnalyticsPage === afterDeleteEmailsSentAnalyticsPage + 1) {
-            logger.log("info", "AnalyticsPageTest - emailSent2: STATUS: %s", "PASS");
+            logger.log("info", "AnalyticsPageTest - emailSentAndDelete: STATUS: %s", "PASS");
         } else {
-            logger.log("warn", "AnalyticsPageTest - emailSent2: STATUS: %s", "FAIL");
+            logger.log("warn", "AnalyticsPageTest - emailSentAndDelete: STATUS: %s", "FAIL");
         }
     }
 

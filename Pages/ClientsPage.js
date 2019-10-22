@@ -1,3 +1,5 @@
+const logger = require("../logger/logger");
+
 class ClientsPage {
     constructor(selenium) {
         this.selenium = selenium;
@@ -184,11 +186,11 @@ class ClientsPage {
         return false;
     }
 
-        /**
-     * 
-     * @param {Array} clientsList 
-     * @param {Array} clientsElems  - Array of WebElements to map to clientsList
-     */
+    /**
+ * 
+ * @param {Array} clientsList 
+ * @param {Array} clientsElems  - Array of WebElements to map to clientsList
+ */
 
     /**
      * 
