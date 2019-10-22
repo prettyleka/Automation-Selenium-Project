@@ -9,11 +9,11 @@ class ClientsPageTest {
     }
 
     async clientTest() {
-        // await this.clientsPage.navigateToClientsPage();
-        // await this.search();
+        await this.clientsPage.navigateToClientsPage();
+        await this.search();
 
-        // await this.clientsPage.navigateToClientsPage();
-        // await this.deleteClient();
+        await this.clientsPage.navigateToClientsPage();
+        await this.deleteClient();
 
         await this.clientsPage.navigateToClientsPage();
         await this.updateClient("email", "112233 - not valid mail", false);
@@ -22,7 +22,6 @@ class ClientsPageTest {
     }
 
     async updateClient(inputType, value, isPositive = false) {
-        //test
         logger.log("debug", "ClientTest - updateClient()");
         let isPass = await this.clientsPage.updateFirstClient(inputType, value, isPositive)
         if (isPass) {
