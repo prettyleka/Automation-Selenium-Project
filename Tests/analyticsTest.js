@@ -13,7 +13,7 @@ class AnalyticsPageTest {
     async analyticsTest() {
         await this.emailSent();
         // await this.emailSentAndDelete();
-        // await this.outstandingClients();
+        await this.outstandingClients();
         await this.testSelenium.close();
     }
 

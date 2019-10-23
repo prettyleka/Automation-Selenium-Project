@@ -1,0 +1,9 @@
+
+2019-10-23 11:53:15 debug [homeTest.js]: HomeTest - navBarTest(Home)
+2019-10-23 11:53:28 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-23 11:53:28 debug [homeTest.js]: HomeTest - navBarTest(Clients)
+2019-10-23 11:53:29 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-23 11:53:29 debug [homeTest.js]: HomeTest - navBarTest(Actions)
+2019-10-23 11:53:31 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-23 11:53:31 debug [homeTest.js]: HomeTest - navBarTest(Analytics)
+2019-10-23 11:53:33 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
