@@ -42,7 +42,7 @@ class ActionsPageTest {
         await this.clientsPage.navigateToClientsPage();
         const results = await this.clientsPage.searchByParams(oldEmailType, "email type");
         if (!results || results.length < 1) {
-            logger.log("error", "ActionsPageTest - updateClient: STATUS: %s. %s", "ERROR", "No results");
+            logger.log("error", "ActionsPageTest - updateClient: STATUS: ERROR. No results");
             return;
         }
         const client = await this.clientsPage.getClientDetails();
@@ -51,16 +51,16 @@ class ActionsPageTest {
         await this.actionsPage.navigateToActionsPage();
         const popup = await this.actionsPage.updateClient(client, newEmailType);
         if (!popup.isSuccessPopUp) {
-            logger.log("error", "ActionsPageTest - updateClient: STATUS: %s.", "ERROR", "Successful Message didn't appear");
+            logger.log("error", "ActionsPageTest - updateClient: STATUS: ERROR. Successful Message didn't appear");
         }
         await this.clientsPage.navigateToClientsPage();
         const results2 = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name");
         const client2 = await this.clientsPage.getParamsFromClient(results2[0]);
         logger.log("debug", `The Client's ,${client2.firstName} ${client2.lastName} ,emailType AFTER update: ${client2.emailType}`);
         if (client2.emailType === newEmailType) {
-            logger.log("info", "ActionsPageTest - updateClient: STATUS: %s", "PASS");
+            logger.log("info", "ActionsPageTest - updateClient: STATUS: PASS.");
         } else {
-            logger.log("warn", "ActionsPageTest - updateClient: STATUS: %s.", "FAIL");
+            logger.log("warn", "ActionsPageTest - updateClient: STATUS: FAIL.");
         }
     }
 
@@ -71,32 +71,32 @@ class ActionsPageTest {
 
         if (isPositive) {
             if (!popUps.isSuccessPopUp) {
-                logger.log("error", "ActionsPageTest - addClient: STATUS: %s. %s", "ERROR", "Successful Message didn't appear");
+                logger.log("error", "ActionsPageTest - addClient: STATUS: ERROR. Successful Message didn't appear");
             }
         } else {
             if (!popUps.isErrorPopUp) {
-                logger.log("error", "ActionsPageTest - addClient: STATUS: %s. %s", "ERROR", "Error Message didn't appear");
+                logger.log("error", "ActionsPageTest - addClient: STATUS: ERROR. Error Message didn't appear");
             }
         }
         await this.clientsPage.navigateToClientsPage();
         const clientAfterSearch = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name", true);
         if (clientAfterSearch === undefined) {
-            logger.log("error", "ActionsPageTest - addClient: STATUS: %s.", "ERROR");
+            logger.log("error", "ActionsPageTest - addClient: STATUS: ERROR.");
             return;
         }
 
         if (isPositive) {
             if (clientAfterSearch.length === 0) {
-                logger.log("warn", "ActionsPageTest - addClient: STATUS: %s. %s", "FAIL", "Client not found after adding");
+                logger.log("warn", "ActionsPageTest - addClient: STATUS: FAIL. Client not found after adding");
 
             } else {
-                logger.log("info", "ActionsPageTest - addClient: STATUS: %s", "PASS");
+                logger.log("info", "ActionsPageTest - addClient: STATUS: PASS");
             }
         } else {
             if (clientAfterSearch.length === 0) {
-                logger.log("info", "ActionsPageTest - addClient: STATUS: %s", "PASS");
+                logger.log("info", "ActionsPageTest - addClient: STATUS: PASS");
             } else {
-                logger.log("warn", "ActionsPageTest - addClient: STATUS: %s. %s", "FAIL", "Invalid client was added");
+                logger.log("warn", "ActionsPageTest - addClient: STATUS: FAIL. Invalid client was added");
             }
         }
     }
