@@ -25,13 +25,13 @@ class ClientsPageTest {
         logger.log("debug", "ClientTest - updateClient()");
         let isPass = await this.clientsPage.updateFirstClient(inputType, value, isPositive)
         if (isPass) {
-            logger.log("info", "ClientsPageTest updateClient: STATUS: %s", "PASS");
+            logger.log("info", "ClientsPageTest updateClient: STATUS: PASS");
             return;
         }
         if (isPositive) {
-            logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected a Success popup");
+            logger.log("warn", "ClientsPageTest updateClient: STATUS: FAIL: Expected a Success popup");
         } else {
-            logger.log("warn", "ClientsPageTest updateClient: STATUS: %s: %s", `FAIL`, "Expected an Error popup");
+            logger.log("warn", "ClientsPageTest updateClient: STATUS: FAIL: Expected an Error popup");
         }
 
         return;
@@ -43,21 +43,21 @@ class ClientsPageTest {
 
         const isPopupAppear = await this.clientsPage.clickFirstClient();
         if (!isPopupAppear) {
-            logger.log("error", "ClientTest - deleteClient: %s", `Popup didnt appear`);
+            logger.log("error", "ClientTest - deleteClient: Popup didnt appear");
             return;
         }
         const isGotSuccessfulMessage = await this.clientsPage.clickDeletePopUpDetail()
         if (!isGotSuccessfulMessage) {
-            logger.log("error", "ClientTest - deleteClient: %s", `Successful Message didn't appear`);
+            logger.log("error", "ClientTest - deleteClient: Successful Message didn't appear");
         }
 
         const clientAfterSearch = await this.clientsPage.searchByParams(`${client.firstName} ${client.lastName}`, "name", true)
         if (clientAfterSearch === undefined) {
-            logger.log("error", "ClientsPageTest - deleteClient: STATUS: %s", "ERROR");
+            logger.log("error", "ClientsPageTest - deleteClient: STATUS: ERROR");
         } else if (clientAfterSearch.length === 0) {
-            logger.log("info", "ClientsPageTest - deleteClient: STATUS: %s", "PASS");
+            logger.log("info", "ClientsPageTest - deleteClient: STATUS: PASS");
         } else {
-            logger.log("warn", "ClientsPageTest - deleteClient: STATUS: %s", "FAIL");
+            logger.log("warn", "ClientsPageTest - deleteClient: STATUS: FAIL");
         }
     }
 
@@ -65,9 +65,9 @@ class ClientsPageTest {
         logger.log("debug", "ClientTest - search()");
         const result = await this.clientsPage.searchAndValidateClient("france", "country")
         if (result) {
-            logger.log("info", "ClientsPageTest - search: STATUS: %s", "PASS");
+            logger.log("info", "ClientsPageTest - search: STATUS: PASS");
         } else {
-            logger.log("warn", "ClientsPageTest - search: STATUS: %s", "FAIL");
+            logger.log("warn", "ClientsPageTest - search: STATUS: FAIL");
         }
     }
 
