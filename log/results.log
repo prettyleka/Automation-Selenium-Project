@@ -1,9 +1,29 @@
-
-2019-10-23 11:53:15 debug [homeTest.js]: HomeTest - navBarTest(Home)
-2019-10-23 11:53:28 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
-2019-10-23 11:53:28 debug [homeTest.js]: HomeTest - navBarTest(Clients)
-2019-10-23 11:53:29 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
-2019-10-23 11:53:29 debug [homeTest.js]: HomeTest - navBarTest(Actions)
-2019-10-23 11:53:31 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
-2019-10-23 11:53:31 debug [homeTest.js]: HomeTest - navBarTest(Analytics)
-2019-10-23 11:53:33 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-28 14:48:02 debug [homeTest.js]: HomeTest - navBarTest(Home)
+2019-10-28 14:48:15 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-28 14:48:15 debug [homeTest.js]: HomeTest - navBarTest(Clients)
+2019-10-28 14:48:17 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-28 14:48:17 debug [homeTest.js]: HomeTest - navBarTest(Actions)
+2019-10-28 14:48:19 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-28 14:48:19 debug [homeTest.js]: HomeTest - navBarTest(Analytics)
+2019-10-28 14:48:21 info [homeTest.js]: HomeTest - navBarTest: STATUS: PASS
+2019-10-28 14:48:36 debug [clientTest.js]: ClientTest - search()
+2019-10-28 14:48:38 info [clientTest.js]: ClientsPageTest - search: STATUS: PASS
+2019-10-28 14:48:39 debug [clientTest.js]: ClientTest - deleteClient()
+2019-10-28 14:48:42 info [clientTest.js]: ClientsPageTest - deleteClient: STATUS: PASS
+2019-10-28 14:48:43 debug [clientTest.js]: ClientTest - updateClient()
+2019-10-28 14:48:45 warn [clientTest.js]: ClientsPageTest updateClient: STATUS: FAIL: Expected an Error popup
+2019-10-28 14:48:47 debug [actionTest.js]: ActionsPageTest addClient with: client = ({"firstName":"testName","lastName":"testLastName","country":"france","owner":"testOwner","email":"test@mail.com"})
+2019-10-28 14:49:04 info [actionTest.js]: ActionsPageTest - addClient: STATUS: PASS
+2019-10-28 14:49:04 debug [actionTest.js]: ActionsPageTest addClient with: client = ({"firstName":"123","lastName":"inValidClient","country":"france","owner":"testOwner","email":"test@mail.com"})
+2019-10-28 14:49:06 error [actionTest.js]: ActionsPageTest - addClient: STATUS: ERROR. Error Message didn't appear
+2019-10-28 14:49:09 warn [actionTest.js]: ActionsPageTest - addClient: STATUS: FAIL. Invalid client was added
+2019-10-28 14:49:09 debug [actionTest.js]: ActionsPageTest updateClient: From EmailType:(B) to (C)
+2019-10-28 14:49:12 debug [actionTest.js]: The Client's ,May Frost ,emailType before update: B
+2019-10-28 14:49:17 debug [actionTest.js]: The Client's ,May Frost ,emailType AFTER update: C
+2019-10-28 14:49:17 info [actionTest.js]: ActionsPageTest - updateClient: STATUS: PASS.
+2019-10-28 14:49:20 debug [analyticsTest.js]: AnalyticsPageTest - emailSent()
+2019-10-28 14:50:02 warn [analyticsTest.js]: AnalyticsPageTest - emailSent: FAIL.
+ On AnalyticsPage emails sent = 402 , but on ClientsPage: 58
+2019-10-28 14:50:02 debug [analyticsTest.js]: AnalyticsPageTest - emailSentAndDelete()
+2019-10-28 14:50:09 info [analyticsTest.js]: AnalyticsPageTest - emailSentAndDelete: STATUS: PASS
+2019-10-28 14:50:16 warn [analyticsTest.js]: AnalyticsPageTest - outstandingClients: STATUS: FAIL
